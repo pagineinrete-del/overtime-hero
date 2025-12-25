@@ -88,8 +88,9 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t border-border bg-card/50 py-6 mt-8">
-        <div className="container text-center text-sm text-muted-foreground">
+        <div className="container text-center text-sm text-muted-foreground space-y-1">
           <p>© 2025 OverTimeTracker — Gestisci le tue ore di straordinario</p>
+          <p className="text-xs">App realizzata da <span className="font-semibold text-primary">GP</span></p>
         </div>
       </footer>
     </div>
