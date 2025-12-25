@@ -1,5 +1,6 @@
 import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {
@@ -10,9 +11,12 @@ export const Header = () => {
           <img src={logo} alt="OverTimeTracker Logo" className="h-12 w-auto" />
         </div>
 
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <User className="h-5 w-5" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <User className="h-5 w-5" />
+          </Button>
+        </div>
       </div>
     </header>
   );
