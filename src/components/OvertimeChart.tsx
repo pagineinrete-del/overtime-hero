@@ -81,37 +81,41 @@ export const OvertimeChart = ({ data }: OvertimeChartProps) => {
 
   if (data.length === 0) {
     return (
-      <div className="flex h-64 items-center justify-center text-muted-foreground">
-        <p>Nessun dato disponibile per il periodo selezionato</p>
+      <div className="flex h-48 sm:h-64 items-center justify-center text-muted-foreground px-4 text-center">
+        <p className="text-sm sm:text-base">Nessun dato disponibile per il periodo selezionato</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       <div className="flex justify-end">
-        <Button variant="outline" size="sm" onClick={exportChart} className="gap-2">
-          <Download className="h-4 w-4" />
-          Esporta Grafico
+        <Button variant="outline" size="sm" onClick={exportChart} className="gap-2 h-9 text-xs sm:text-sm">
+          <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <span className="hidden xs:inline">Esporta Grafico</span>
+          <span className="xs:hidden">Esporta</span>
         </Button>
       </div>
-      <div ref={chartRef} className="h-64 w-full">
+      <div ref={chartRef} className="h-48 sm:h-64 w-full -ml-2 sm:ml-0">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 10, right: 5, left: -15, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
             <XAxis
               dataKey="name"
               stroke="hsl(var(--muted-foreground))"
-              fontSize={12}
+              fontSize={10}
               tickLine={false}
               axisLine={false}
+              interval={0}
+              tick={{ fontSize: 10 }}
             />
             <YAxis
               stroke="hsl(var(--muted-foreground))"
-              fontSize={12}
+              fontSize={10}
               tickLine={false}
               axisLine={false}
               tickFormatter={(value) => `${value}h`}
+              width={35}
             />
             <Tooltip
               contentStyle={{
@@ -119,6 +123,7 @@ export const OvertimeChart = ({ data }: OvertimeChartProps) => {
                 border: '1px solid hsl(var(--border))',
                 borderRadius: '0.75rem',
                 boxShadow: 'var(--shadow-lg)',
+                fontSize: '12px',
               }}
               labelStyle={{ color: 'hsl(var(--foreground))', fontWeight: 600 }}
               formatter={(value: number) => [`${value} ore`, 'Straordinari']}
@@ -126,8 +131,8 @@ export const OvertimeChart = ({ data }: OvertimeChartProps) => {
             <Bar
               dataKey="hours"
               fill="hsl(var(--primary))"
-              radius={[6, 6, 0, 0]}
-              maxBarSize={50}
+              radius={[4, 4, 0, 0]}
+              maxBarSize={40}
             />
           </BarChart>
         </ResponsiveContainer>
