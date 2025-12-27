@@ -75,35 +75,35 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2 gradient-primary text-primary-foreground shadow-glow hover:opacity-90 transition-opacity">
+        <Button className="w-full sm:w-auto gap-2 gradient-primary text-primary-foreground shadow-glow hover:opacity-90 transition-opacity h-11 sm:h-10">
           <Plus className="h-4 w-4" />
           <span className="hidden sm:inline">Aggiungi Straordinario</span>
-          <span className="sm:hidden">Aggiungi</span>
+          <span className="sm:hidden">Aggiungi Ore</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto mx-4 rounded-xl">
         <DialogHeader>
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl gradient-primary">
-              <Clock className="h-5 w-5 text-primary-foreground" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl gradient-primary">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
             </div>
             <div>
-              <DialogTitle>Nuovo Straordinario</DialogTitle>
-              <DialogDescription>Registra le ore di lavoro straordinario</DialogDescription>
+              <DialogTitle className="text-base sm:text-lg">Nuovo Straordinario</DialogTitle>
+              <DialogDescription className="text-xs sm:text-sm">Registra le ore di lavoro straordinario</DialogDescription>
             </div>
           </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="mt-4 space-y-5">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="date">Data</Label>
+        <form onSubmit={handleSubmit} className="mt-3 sm:mt-4 space-y-4 sm:space-y-5">
+          <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5 sm:space-y-2">
+              <Label htmlFor="date" className="text-sm">Data</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      'w-full justify-start text-left font-normal',
+                      'w-full justify-start text-left font-normal h-11 sm:h-10 text-sm',
                       !date && 'text-muted-foreground'
                     )}
                   >
@@ -123,8 +123,8 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
               </Popover>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="hours">Ore</Label>
+            <div className="space-y-1.5 sm:space-y-2">
+              <Label htmlFor="hours" className="text-sm">Ore</Label>
               <Input
                 id="hours"
                 type="number"
@@ -134,36 +134,39 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
                 placeholder="Es. 2.5"
                 value={hours}
                 onChange={(e) => setHours(e.target.value)}
+                className="h-11 sm:h-10 text-base sm:text-sm"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Descrizione attività</Label>
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="description" className="text-sm">Descrizione attività</Label>
             <Input
               id="description"
               placeholder="Es. Completamento progetto cliente"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              className="h-11 sm:h-10 text-base sm:text-sm"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="notes">Note (opzionale)</Label>
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="notes" className="text-sm">Note (opzionale)</Label>
             <Textarea
               id="notes"
               placeholder="Aggiungi note o dettagli..."
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
+              className="text-base sm:text-sm resize-none"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 pt-2">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)} className="h-11 sm:h-10">
               Annulla
             </Button>
-            <Button type="submit" className="gradient-primary text-primary-foreground">
+            <Button type="submit" className="gradient-primary text-primary-foreground h-11 sm:h-10">
               Salva
             </Button>
           </div>

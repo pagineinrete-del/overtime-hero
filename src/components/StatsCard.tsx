@@ -42,16 +42,16 @@ export const StatsCard = ({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-xl border p-5 shadow-card transition-all duration-300 hover:shadow-card-hover animate-fade-in',
+        'relative overflow-hidden rounded-xl border p-3 sm:p-5 shadow-card transition-all duration-300 hover:shadow-card-hover animate-fade-in',
         variants[variant],
         className
       )}
     >
-      <div className="flex items-start justify-between">
-        <div>
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0 flex-1">
           <p
             className={cn(
-              'text-sm font-medium',
+              'text-xs sm:text-sm font-medium truncate',
               variant === 'primary' ? 'text-primary-foreground/80' : 'text-muted-foreground'
             )}
           >
@@ -59,7 +59,7 @@ export const StatsCard = ({
           </p>
           <p
             className={cn(
-              'mt-1 text-3xl font-bold tracking-tight',
+              'mt-0.5 sm:mt-1 text-2xl sm:text-3xl font-bold tracking-tight',
               textVariants[variant]
             )}
           >
@@ -68,7 +68,7 @@ export const StatsCard = ({
           {subtitle && (
             <p
               className={cn(
-                'mt-1 text-xs',
+                'mt-0.5 sm:mt-1 text-[10px] sm:text-xs truncate',
                 variant === 'primary' ? 'text-primary-foreground/70' : 'text-muted-foreground'
               )}
             >
@@ -78,11 +78,11 @@ export const StatsCard = ({
         </div>
         <div
           className={cn(
-            'flex h-11 w-11 items-center justify-center rounded-lg',
+            'flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-lg shrink-0',
             iconVariants[variant]
           )}
         >
-          <Icon className="h-5 w-5" />
+          <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
         </div>
       </div>
     </div>
