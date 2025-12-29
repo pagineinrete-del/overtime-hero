@@ -16,7 +16,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { OvertimeEntry } from '@/types/overtime';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { OvertimeEntry, OvertimeType } from '@/types/overtime';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 
@@ -30,6 +37,7 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
   const [hours, setHours] = useState('');
   const [description, setDescription] = useState('');
   const [notes, setNotes] = useState('');
+  const [type, setType] = useState<OvertimeType>('straordinario');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,10 +66,12 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
       hours: hoursNum,
       description: description.trim(),
       notes: notes.trim() || undefined,
+      type,
     });
 
+    const typeLabels = { straordinario: 'Straordinario', recupero: 'Recupero', festivo: 'Festivo' };
     toast({
-      title: 'Straordinario registrato',
+      title: `${typeLabels[type]} registrato`,
       description: `${hoursNum} ore aggiunte per ${format(date, 'd MMMM', { locale: it })}`,
     });
 
@@ -70,6 +80,7 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
     setHours('');
     setDescription('');
     setNotes('');
+    setType('straordinario');
   };
 
   return (
@@ -95,6 +106,20 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="mt-3 sm:mt-4 space-y-4 sm:space-y-5">
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label className="text-sm">Tipo</Label>
+            <Select value={type} onValueChange={(v) => setType(v as OvertimeType)}>
+              <SelectTrigger className="h-11 sm:h-10 text-sm">
+                <SelectValue placeholder="Seleziona tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="straordinario">🕐 Straordinario</SelectItem>
+                <SelectItem value="recupero">🔄 Ore di Recupero</SelectItem>
+                <SelectItem value="festivo">🎉 Festivo</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
             <div className="space-y-1.5 sm:space-y-2">
               <Label htmlFor="date" className="text-sm">Data</Label>
