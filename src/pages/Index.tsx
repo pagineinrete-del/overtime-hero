@@ -1,4 +1,4 @@
-import { Clock, TrendingUp, Calendar, AlertCircle, RotateCcw, PartyPopper } from 'lucide-react';
+import { Clock, TrendingUp, Calendar, AlertCircle, RotateCcw, PartyPopper, ClipboardList } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { StatsCard } from '@/components/StatsCard';
 import { FilterTabs } from '@/components/FilterTabs';
@@ -32,13 +32,19 @@ const Index = () => {
         )}
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
           <StatsCard
             title="Ore Totali"
             value={stats.totalHours.toFixed(1)}
             subtitle="ore questo periodo"
             icon={Clock}
             variant="primary"
+          />
+          <StatsCard
+            title="Straord. Ordinario"
+            value={stats.ordinaryHours.toFixed(1)}
+            subtitle="ore ordinarie"
+            icon={ClipboardList}
           />
           <StatsCard
             title="Ore di Recupero"
@@ -65,13 +71,6 @@ const Index = () => {
             value={stats.entriesCount}
             subtitle="questo periodo"
             icon={Calendar}
-          />
-          <StatsCard
-            title="Max Giornaliero"
-            value={stats.maxHoursDay.toFixed(1)}
-            subtitle="ore in un giorno"
-            icon={AlertCircle}
-            variant={stats.maxHoursDay > 4 ? 'warning' : 'default'}
           />
         </div>
 
