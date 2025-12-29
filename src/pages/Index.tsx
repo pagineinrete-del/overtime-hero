@@ -1,4 +1,4 @@
-import { Clock, TrendingUp, Calendar, AlertCircle, RotateCcw, PartyPopper, ClipboardList } from 'lucide-react';
+import { Clock, TrendingUp, Calendar, RotateCcw, PartyPopper, ClipboardList } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { StatsCard } from '@/components/StatsCard';
 import { FilterTabs } from '@/components/FilterTabs';
@@ -6,6 +6,7 @@ import { OvertimeChart } from '@/components/OvertimeChart';
 import { OvertimeList } from '@/components/OvertimeList';
 import { AddOvertimeDialog } from '@/components/AddOvertimeDialog';
 import { ThresholdAlert } from '@/components/ThresholdAlert';
+import { ExportPdfButton } from '@/components/ExportPdfButton';
 import { useOvertime } from '@/hooks/useOvertime';
 
 const Index = () => {
@@ -77,7 +78,14 @@ const Index = () => {
         {/* Filters and Add Button */}
         <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
           <FilterTabs value={filter} onChange={setFilter} />
-          <AddOvertimeDialog onAdd={addEntry} />
+          <div className="flex gap-2 w-full sm:w-auto">
+            <ExportPdfButton 
+              stats={stats} 
+              entries={entries} 
+              filterLabel={filter === 'week' ? 'Settimana' : filter === 'month' ? 'Mese' : filter === 'year' ? 'Anno' : 'Tutti'} 
+            />
+            <AddOvertimeDialog onAdd={addEntry} />
+          </div>
         </div>
 
         {/* Chart */}
