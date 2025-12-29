@@ -17,6 +17,8 @@ const generateDemoData = (): OvertimeEntry[] => {
     'Chiamata cliente internazionale',
   ];
 
+  const types: Array<'straordinario' | 'recupero' | 'festivo'> = ['straordinario', 'recupero', 'festivo'];
+  
   for (let i = 0; i < 15; i++) {
     const date = new Date();
     date.setDate(date.getDate() - Math.floor(Math.random() * 60));
@@ -26,6 +28,7 @@ const generateDemoData = (): OvertimeEntry[] => {
       hours: Math.round((Math.random() * 4 + 0.5) * 2) / 2,
       description: descriptions[Math.floor(Math.random() * descriptions.length)],
       notes: Math.random() > 0.5 ? 'Note aggiuntive per questa registrazione' : undefined,
+      type: types[Math.floor(Math.random() * types.length)],
       createdAt: new Date(),
     });
   }
@@ -68,12 +71,16 @@ export const useOvertime = (threshold: number = 40) => {
     const totalHours = filteredEntries.reduce((sum, entry) => sum + entry.hours, 0);
     const uniqueDays = new Set(filteredEntries.map((e) => format(e.date, 'yyyy-MM-dd'))).size;
     const maxHoursDay = filteredEntries.reduce((max, entry) => Math.max(max, entry.hours), 0);
+    const recoveryHours = filteredEntries.filter(e => e.type === 'recupero').reduce((sum, e) => sum + e.hours, 0);
+    const holidayHours = filteredEntries.filter(e => e.type === 'festivo').reduce((sum, e) => sum + e.hours, 0);
 
     return {
       totalHours,
       averagePerDay: uniqueDays > 0 ? totalHours / uniqueDays : 0,
       entriesCount: filteredEntries.length,
       maxHoursDay,
+      recoveryHours,
+      holidayHours,
     };
   }, [filteredEntries]);
 

@@ -1,9 +1,12 @@
+export type OvertimeType = 'straordinario' | 'recupero' | 'festivo';
+
 export interface OvertimeEntry {
   id: string;
   date: Date;
   hours: number;
   description: string;
   notes?: string;
+  type: OvertimeType;
   createdAt: Date;
 }
 
@@ -14,4 +17,6 @@ export interface OvertimeStats {
   averagePerDay: number;
   entriesCount: number;
   maxHoursDay: number;
+  recoveryHours: number;
+  holidayHours: number;
 }

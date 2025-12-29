@@ -1,4 +1,4 @@
-import { Clock, TrendingUp, Calendar, AlertCircle } from 'lucide-react';
+import { Clock, TrendingUp, Calendar, AlertCircle, RotateCcw, PartyPopper } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { StatsCard } from '@/components/StatsCard';
 import { FilterTabs } from '@/components/FilterTabs';
@@ -32,13 +32,27 @@ const Index = () => {
         )}
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-3">
           <StatsCard
             title="Ore Totali"
             value={stats.totalHours.toFixed(1)}
             subtitle="ore questo periodo"
             icon={Clock}
             variant="primary"
+          />
+          <StatsCard
+            title="Ore di Recupero"
+            value={stats.recoveryHours.toFixed(1)}
+            subtitle="ore recuperate"
+            icon={RotateCcw}
+            variant="success"
+          />
+          <StatsCard
+            title="Straordinari Festivi"
+            value={stats.holidayHours.toFixed(1)}
+            subtitle="ore festive"
+            icon={PartyPopper}
+            variant="warning"
           />
           <StatsCard
             title="Media Giornaliera"
