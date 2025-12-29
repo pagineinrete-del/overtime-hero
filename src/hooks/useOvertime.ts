@@ -73,6 +73,7 @@ export const useOvertime = (threshold: number = 40) => {
     const maxHoursDay = filteredEntries.reduce((max, entry) => Math.max(max, entry.hours), 0);
     const recoveryHours = filteredEntries.filter(e => e.type === 'recupero').reduce((sum, e) => sum + e.hours, 0);
     const holidayHours = filteredEntries.filter(e => e.type === 'festivo').reduce((sum, e) => sum + e.hours, 0);
+    const ordinaryHours = filteredEntries.filter(e => e.type === 'ordinario').reduce((sum, e) => sum + e.hours, 0);
 
     return {
       totalHours,
@@ -81,6 +82,7 @@ export const useOvertime = (threshold: number = 40) => {
       maxHoursDay,
       recoveryHours,
       holidayHours,
+      ordinaryHours,
     };
   }, [filteredEntries]);
 

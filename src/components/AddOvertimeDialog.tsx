@@ -114,6 +114,7 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="straordinario">🕐 Straordinario</SelectItem>
+                <SelectItem value="ordinario">📋 Straordinario Ordinario</SelectItem>
                 <SelectItem value="recupero">🔄 Ore di Recupero</SelectItem>
                 <SelectItem value="festivo">🎉 Festivo</SelectItem>
               </SelectContent>
