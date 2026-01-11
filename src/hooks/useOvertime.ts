@@ -1,44 +1,62 @@
-import { useState, useMemo } from 'react';
-import { OvertimeEntry, FilterPeriod, OvertimeStats } from '@/types/overtime';
-import { startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, isWithinInterval, format } from 'date-fns';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { OvertimeEntry, FilterPeriod, OvertimeStats, OvertimeType } from '@/types/overtime';
+import { startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, isWithinInterval, format, parseISO } from 'date-fns';
 import { it } from 'date-fns/locale';
-
-// Demo data
-const generateDemoData = (): OvertimeEntry[] => {
-  const entries: OvertimeEntry[] = [];
-  const descriptions = [
-    'Completamento progetto cliente',
-    'Riunione urgente',
-    'Supporto tecnico',
-    'Deploy in produzione',
-    'Formazione team',
-    'Revisione documentazione',
-    'Debug sistema',
-    'Chiamata cliente internazionale',
-  ];
-
-  const types: Array<'straordinario' | 'recupero' | 'festivo'> = ['straordinario', 'recupero', 'festivo'];
-  
-  for (let i = 0; i < 15; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() - Math.floor(Math.random() * 60));
-    entries.push({
-      id: `demo-${i}`,
-      date,
-      hours: Math.round((Math.random() * 4 + 0.5) * 2) / 2,
-      description: descriptions[Math.floor(Math.random() * descriptions.length)],
-      notes: Math.random() > 0.5 ? 'Note aggiuntive per questa registrazione' : undefined,
-      type: types[Math.floor(Math.random() * types.length)],
-      createdAt: new Date(),
-    });
-  }
-
-  return entries.sort((a, b) => b.date.getTime() - a.date.getTime());
-};
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 export const useOvertime = (threshold: number = 40) => {
-  const [entries, setEntries] = useState<OvertimeEntry[]>(generateDemoData());
+  const [entries, setEntries] = useState<OvertimeEntry[]>([]);
   const [filter, setFilter] = useState<FilterPeriod>('month');
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  // Fetch entries from database
+  const fetchEntries = useCallback(async () => {
+    if (!user) {
+      setEntries([]);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('overtime_entries')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('date', { ascending: false });
+
+      if (error) throw error;
+
+      const formattedEntries: OvertimeEntry[] = (data || []).map((entry) => ({
+        id: entry.id,
+        date: parseISO(entry.date),
+        hours: Number(entry.hours),
+        description: entry.description,
+        notes: entry.notes || undefined,
+        type: (entry.description.toLowerCase().includes('recupero') ? 'recupero' :
+               entry.description.toLowerCase().includes('festiv') ? 'festivo' :
+               entry.description.toLowerCase().includes('ordinari') ? 'ordinario' : 'straordinario') as OvertimeType,
+        createdAt: new Date(entry.created_at),
+      }));
+
+      setEntries(formattedEntries);
+    } catch (error: any) {
+      toast({
+        title: 'Errore',
+        description: 'Impossibile caricare le registrazioni',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [user, toast]);
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
 
   const filteredEntries = useMemo(() => {
     const now = new Date();
@@ -102,23 +120,120 @@ export const useOvertime = (threshold: number = 40) => {
 
   const isOverThreshold = stats.totalHours > threshold;
 
-  const addEntry = (entry: Omit<OvertimeEntry, 'id' | 'createdAt'>) => {
-    const newEntry: OvertimeEntry = {
-      ...entry,
-      id: `entry-${Date.now()}`,
-      createdAt: new Date(),
-    };
-    setEntries((prev) => [newEntry, ...prev].sort((a, b) => b.date.getTime() - a.date.getTime()));
+  const addEntry = async (entry: Omit<OvertimeEntry, 'id' | 'createdAt'>) => {
+    if (!user) {
+      toast({
+        title: 'Errore',
+        description: 'Devi effettuare l\'accesso per aggiungere registrazioni',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      const typeLabel = entry.type === 'recupero' ? 'Recupero - ' :
+                        entry.type === 'festivo' ? 'Festivo - ' :
+                        entry.type === 'ordinario' ? 'Ordinario - ' : '';
+      
+      const { data, error } = await supabase
+        .from('overtime_entries')
+        .insert({
+          user_id: user.id,
+          date: format(entry.date, 'yyyy-MM-dd'),
+          hours: entry.hours,
+          description: `${typeLabel}${entry.description}`,
+          notes: entry.notes || null,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      const newEntry: OvertimeEntry = {
+        id: data.id,
+        date: parseISO(data.date),
+        hours: Number(data.hours),
+        description: data.description,
+        notes: data.notes || undefined,
+        type: entry.type,
+        createdAt: new Date(data.created_at),
+      };
+
+      setEntries((prev) => [newEntry, ...prev].sort((a, b) => b.date.getTime() - a.date.getTime()));
+
+      toast({
+        title: 'Registrazione aggiunta',
+        description: `${entry.hours} ore registrate con successo`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Errore',
+        description: error.message || 'Impossibile aggiungere la registrazione',
+        variant: 'destructive',
+      });
+    }
   };
 
-  const deleteEntry = (id: string) => {
-    setEntries((prev) => prev.filter((entry) => entry.id !== id));
+  const deleteEntry = async (id: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('overtime_entries')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setEntries((prev) => prev.filter((entry) => entry.id !== id));
+
+      toast({
+        title: 'Registrazione eliminata',
+        description: 'La registrazione è stata eliminata con successo',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Errore',
+        description: error.message || 'Impossibile eliminare la registrazione',
+        variant: 'destructive',
+      });
+    }
   };
 
-  const updateEntry = (id: string, updates: Partial<OvertimeEntry>) => {
-    setEntries((prev) =>
-      prev.map((entry) => (entry.id === id ? { ...entry, ...updates } : entry))
-    );
+  const updateEntry = async (id: string, updates: Partial<OvertimeEntry>) => {
+    if (!user) return;
+
+    try {
+      const updateData: any = {};
+      if (updates.date) updateData.date = format(updates.date, 'yyyy-MM-dd');
+      if (updates.hours !== undefined) updateData.hours = updates.hours;
+      if (updates.description) updateData.description = updates.description;
+      if (updates.notes !== undefined) updateData.notes = updates.notes || null;
+
+      const { error } = await supabase
+        .from('overtime_entries')
+        .update(updateData)
+        .eq('id', id)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setEntries((prev) =>
+        prev.map((entry) => (entry.id === id ? { ...entry, ...updates } : entry))
+      );
+
+      toast({
+        title: 'Registrazione aggiornata',
+        description: 'Le modifiche sono state salvate',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Errore',
+        description: error.message || 'Impossibile aggiornare la registrazione',
+        variant: 'destructive',
+      });
+    }
   };
 
   return {
@@ -130,8 +245,10 @@ export const useOvertime = (threshold: number = 40) => {
     chartData,
     isOverThreshold,
     threshold,
+    loading,
     addEntry,
     deleteEntry,
     updateEntry,
+    refetch: fetchEntries,
   };
 };
