@@ -1,4 +1,4 @@
-import { Clock, TrendingUp, Calendar, RotateCcw, PartyPopper, ClipboardList } from 'lucide-react';
+import { Clock, TrendingUp, Calendar, RotateCcw, PartyPopper, ClipboardList, Loader2 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { StatsCard } from '@/components/StatsCard';
 import { FilterTabs } from '@/components/FilterTabs';
@@ -18,14 +18,25 @@ const Index = () => {
     chartData,
     isOverThreshold,
     threshold,
+    loading,
     addEntry,
     deleteEntry,
   } = useOvertime(40);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background safe-area-inset">
+        <Header />
+        <div className="flex items-center justify-center h-[50vh]">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background safe-area-inset">
       <Header />
-
       <main className="container py-4 sm:py-6 space-y-4 sm:space-y-6 px-4 sm:px-6">
         {/* Alert */}
         {isOverThreshold && (
