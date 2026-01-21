@@ -53,7 +53,7 @@ const Auth = () => {
     } else {
       toast({
         title: 'Accesso effettuato',
-        description: 'Benvenuto in OverTimeTracker!',
+        description: 'Benvenuto in TempoPiù!',
       });
     }
 
@@ -108,10 +108,10 @@ const Auth = () => {
         <div className="flex flex-col items-center space-y-2 mb-8">
           <img 
             src={logo} 
-            alt="OverTimeTracker Logo" 
+            alt="TempoPiù Logo" 
             className="h-20 w-auto drop-shadow-lg"
           />
-          <h1 className="text-2xl font-bold text-foreground">OverTimeTracker</h1>
+          <h1 className="text-2xl font-bold text-foreground">TempoPiù</h1>
           <p className="text-sm text-muted-foreground text-center">
             Gestisci le tue ore di straordinario
           </p>
