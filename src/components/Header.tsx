@@ -39,11 +39,11 @@ export const Header = () => {
         <div className="flex items-center gap-2">
           <img 
             src={logo} 
-            alt="OverTimeTracker Logo" 
+            alt="TempoPiù Logo" 
             className="h-10 sm:h-12 w-auto drop-shadow-lg"
           />
           <span className="hidden xs:inline-block text-lg sm:text-xl font-bold text-foreground">
-            OverTime
+            TempoPiù
           </span>
         </div>
 

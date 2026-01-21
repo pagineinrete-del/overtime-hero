@@ -124,7 +124,7 @@ export const ExportPdfButton = ({ stats, entries, filterLabel }: ExportPdfButton
         doc.setFontSize(8);
         doc.setFont('helvetica', 'normal');
         doc.text(
-          `Pagina ${i} di ${pageCount} - OverTimeTracker`,
+          `Pagina ${i} di ${pageCount} - TempoPiù`,
           pageWidth / 2,
           doc.internal.pageSize.getHeight() - 10,
           { align: 'center' }
