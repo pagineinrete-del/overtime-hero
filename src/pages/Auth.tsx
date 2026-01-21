@@ -239,7 +239,7 @@ const Auth = () => {
 
         {/* Footer */}
         <p className="text-center text-xs text-muted-foreground">
-          App realizzata da <span className="font-semibold text-primary">GP</span>
+          App realizzata da <a href="https://gennaropaolillo.it" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">gennaropaolillo.it</a>
         </p>
       </div>
     </div>
