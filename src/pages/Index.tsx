@@ -1,4 +1,5 @@
 import { Clock, TrendingUp, Calendar, RotateCcw, PartyPopper, ClipboardList, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { StatsCard } from '@/components/StatsCard';
 import { FilterTabs } from '@/components/FilterTabs';
@@ -120,9 +121,17 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t border-border bg-card/50 py-4 sm:py-6 mt-6 sm:mt-8 safe-area-bottom">
-        <div className="container text-center text-xs sm:text-sm text-muted-foreground space-y-1 px-4">
+        <div className="container text-center text-xs sm:text-sm text-muted-foreground space-y-2 px-4">
           <p>© 2025 TempoPiù — Gestisci le tue ore di straordinario</p>
-          <p className="text-[10px] sm:text-xs">App realizzata da <a href="https://gennaropaolillo.it" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">gennaropaolillo.it</a></p>
+          <p className="text-[10px] sm:text-xs">
+            App realizzata da{' '}
+            <a href="https://gennaropaolillo.it" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+              gennaropaolillo.it
+            </a>
+          </p>
+          <p className="text-[10px] sm:text-xs">
+            <Link to="/privacy" className="text-primary hover:underline">Privacy Policy e Cookie</Link>
+          </p>
         </div>
       </footer>
     </div>
