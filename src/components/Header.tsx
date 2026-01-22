@@ -1,9 +1,8 @@
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import logo from '@/assets/logo.png';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,14 +35,12 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-lg safe-area-top">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <img 
-            src={logo} 
-            alt="TempoPiù Logo" 
-            className="h-10 sm:h-12 w-auto drop-shadow-lg"
-          />
-          <span className="hidden xs:inline-block text-lg sm:text-xl font-bold text-foreground">
-            TempoPiù
+        <div className="flex items-center gap-1">
+          <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+            Tempo
+          </span>
+          <span className="text-xl sm:text-2xl font-bold text-amber-500">
+            Più
           </span>
         </div>
 

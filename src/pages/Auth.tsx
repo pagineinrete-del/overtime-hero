@@ -7,8 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Clock } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import { Loader2 } from 'lucide-react';
 
 const Auth = () => {
   const { user, loading, signIn, signUp } = useAuth();
@@ -105,13 +104,15 @@ const Auth = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4 safe-area-inset">
       <div className="w-full max-w-md space-y-6">
         {/* Logo and Title */}
-        <div className="flex flex-col items-center space-y-2 mb-8">
-          <img 
-            src={logo} 
-            alt="TempoPiù Logo" 
-            className="h-20 w-auto drop-shadow-lg"
-          />
-          <h1 className="text-2xl font-bold text-foreground">TempoPiù</h1>
+        <div className="flex flex-col items-center space-y-3 mb-8">
+          <h1 className="text-4xl font-bold flex items-center gap-1">
+            <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+              Tempo
+            </span>
+            <span className="text-amber-500">
+              Più
+            </span>
+          </h1>
           <p className="text-sm text-muted-foreground text-center">
             Gestisci le tue ore di straordinario
           </p>
