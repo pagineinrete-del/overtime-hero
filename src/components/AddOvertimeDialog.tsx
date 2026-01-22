@@ -35,7 +35,7 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [hours, setHours] = useState('');
-  const [description, setDescription] = useState('');
+  
   const [notes, setNotes] = useState('');
   const [type, setType] = useState<OvertimeType>('straordinario');
 
@@ -52,19 +52,10 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
       return;
     }
 
-    if (!description.trim()) {
-      toast({
-        title: 'Errore',
-        description: 'Inserisci una descrizione',
-        variant: 'destructive',
-      });
-      return;
-    }
-
     onAdd({
       date,
       hours: hoursNum,
-      description: description.trim(),
+      description: notes.trim() || '-',
       notes: notes.trim() || undefined,
       type,
     });
@@ -78,7 +69,7 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
     setOpen(false);
     setDate(new Date());
     setHours('');
-    setDescription('');
+    
     setNotes('');
     setType('straordinario');
   };
@@ -165,17 +156,6 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
           </div>
 
           <div className="space-y-1.5 sm:space-y-2">
-            <Label htmlFor="description" className="text-sm">Descrizione attività</Label>
-            <Input
-              id="description"
-              placeholder="Es. Completamento progetto cliente"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="h-11 sm:h-10 text-base sm:text-sm"
-            />
-          </div>
-
-          <div className="space-y-1.5 sm:space-y-2">
             <Label htmlFor="notes" className="text-sm">Note (opzionale)</Label>
             <Textarea
               id="notes"
@@ -186,6 +166,7 @@ export const AddOvertimeDialog = ({ onAdd }: AddOvertimeDialogProps) => {
               className="text-base sm:text-sm resize-none"
             />
           </div>
+
 
           <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 pt-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)} className="h-11 sm:h-10">
