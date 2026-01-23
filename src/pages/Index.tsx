@@ -60,9 +60,9 @@ const Index = () => {
             icon={ClipboardList}
           />
           <StatsCard
-            title="Ore di Recupero"
+            title="Ore da Recuperare"
             value={stats.recoveryHours.toFixed(1)}
-            subtitle="ore recuperate"
+            subtitle="ore da recuperare"
             icon={RotateCcw}
             variant="success"
           />

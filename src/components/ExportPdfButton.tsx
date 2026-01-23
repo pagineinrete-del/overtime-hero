@@ -45,7 +45,7 @@ export const ExportPdfButton = ({ stats, entries, filterLabel }: ExportPdfButton
       const summaryData = [
         { label: 'Ore Totali', value: `${stats.totalHours.toFixed(1)} ore` },
         { label: 'Straordinario Ordinario', value: `${stats.ordinaryHours.toFixed(1)} ore` },
-        { label: 'Ore di Recupero', value: `${stats.recoveryHours.toFixed(1)} ore` },
+        { label: 'Ore da Recuperare', value: `${stats.recoveryHours.toFixed(1)} ore` },
         { label: 'Straordinari Festivi', value: `${stats.holidayHours.toFixed(1)} ore` },
         { label: 'Media Giornaliera', value: `${stats.averagePerDay.toFixed(1)} ore` },
         { label: 'Numero Registrazioni', value: `${stats.entriesCount}` },
