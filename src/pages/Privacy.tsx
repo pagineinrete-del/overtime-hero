@@ -17,10 +17,10 @@ const Privacy = () => {
             </Link>
             <span className="text-lg sm:text-xl font-bold flex items-center gap-1">
               <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-                Tempo
+                Extra
               </span>
               <span className="text-amber-500">
-                Più
+                Ore
               </span>
             </span>
           </div>
@@ -55,7 +55,7 @@ const Privacy = () => {
             <div>
               <h2 className="text-lg font-semibold mb-3">1. Informazioni raccolte</h2>
               <p className="text-muted-foreground">
-                L'applicazione TempoPiù raccoglie le seguenti informazioni personali degli utenti registrati:
+                L'applicazione ExtraOre raccoglie le seguenti informazioni personali degli utenti registrati:
               </p>
               <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
                 <li>Indirizzo email (per l'autenticazione)</li>
@@ -142,7 +142,7 @@ const Privacy = () => {
             <div>
               <h2 className="text-lg font-semibold mb-3">2. Cookie utilizzati</h2>
               <p className="text-muted-foreground">
-                L'applicazione TempoPiù utilizza esclusivamente:
+                L'applicazione ExtraOre utilizza esclusivamente:
               </p>
               <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
                 <li><strong>Cookie tecnici essenziali:</strong> necessari per il funzionamento dell'applicazione e per mantenere la sessione utente attiva</li>
@@ -187,7 +187,7 @@ const Privacy = () => {
       {/* Footer */}
       <footer className="border-t border-border bg-card/50 py-4 sm:py-6 mt-6 safe-area-bottom">
         <div className="container text-center text-xs sm:text-sm text-muted-foreground space-y-1 px-4">
-          <p>© 2025 TempoPiù — Gestisci le tue ore di straordinario</p>
+          <p>© 2025 ExtraOre — Gestisci le tue ore di straordinario</p>
           <p className="text-[10px] sm:text-xs">
             App realizzata da{' '}
             <a href="https://gennaropaolillo.it" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">

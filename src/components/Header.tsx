@@ -37,10 +37,10 @@ export const Header = () => {
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4">
         <div className="flex items-center gap-1">
           <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-            Tempo
+            Extra
           </span>
           <span className="text-xl sm:text-2xl font-bold text-amber-500">
-            Più
+            Ore
           </span>
         </div>
 
